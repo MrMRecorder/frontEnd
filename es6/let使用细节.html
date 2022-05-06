@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>let 使用注意事项和细节</title>
+    <script type="text/javascript">
+
+
+        // let 细节1
+        // (1) let 声明的变量, 在代码块中，则作用域在代码块中
+        // (2) var声明的变量, 在代码块中，作用域没有限制
+        {
+            var name = "tom";
+            let job = "捕鼠冠军";
+            console.log("name=", name);
+            console.log("job=", job);
+        }
+
+        console.log("name=", name);
+        //console.log("job=", job);//job is not defined
+
+        // let 细节2
+        // 1. var 可以声明多次（多次赋值）
+        // 2. let 只能声明一次 (变量还可以赋值，但是不能加let修饰)
+        var num1 = 100;
+        var num1 = 200;
+        console.log(num1);//200
+        let num2 = 600;
+        //Syntax => 语法
+        //let num2 = 900;//Uncaught SyntaxError: redeclaration of let num2
+
+        console.log(num2);
+
+        // let 细节3
+        // 1. let 不存在变量提升
+        // 2. var 存在变量提升
+        // 变量提升——先调用再声明
+
+        console.log("x=", x);//undefined
+        var x = "tom";
+
+        //can't access lexical declaration 'z'
+        console.log("z=", z);
+        let  z = "mary";
+
+
+    </script>
+</head>
+<body>
+1.es6——全称 ECMAScript 6.0 ,是 JavaScript 的下一个版本标准， 增加了新的语法特性
+2. ES6 设计目标：达到 JavaScript 语言可以用来编写复杂的大型程序，成为企业级开发语言
+3. ECMAScript 和 JavaScript 的关系：
+ECMAScript 是 JavaScript 的规范/规则，JavaScript 是 ECMAScript 的一种实现
+</body>
+</html>

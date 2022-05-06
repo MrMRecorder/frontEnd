@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        // 调用f8函数,arr是数组,fun传入箭头函数,可以计算arr的和,并写出调用方法
+        let f8 = (arr, fun) => {
+            console.log("结果=", fun(arr));
+        }
+        f8([1, 2, 3, 4, 5], (arr) => {
+            let res = 0;
+            for (let i = 0; i < arr.length; i++) {
+                res += arr[i];
+            }
+            return res;
+        })
+        //箭头函数作为参数传给fun，arr再作为fun的参数求和，最后输出
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

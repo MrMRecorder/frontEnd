@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        // 根据给出的数据, 用ES6 的方式, 编写方法,
+        // 使用对象解构的方式,得到oper和arr,并根据oper的值(可以是+、-、*、/)来计算结果
+        var cal = {
+            oper: "*",
+            arr: [1, 2, 3, 5]
+        }
+
+        function calNum({oper, arr}) {
+            let res = 0;
+            if ("+" == oper) {
+                res = arr[0];
+                for (let i = 1; i < arr.length; i++) {
+                    res += arr[i];
+                }
+            }else if ("-" == oper) {
+                res = arr[0];
+                for (let i = 1; i < arr.length; i++) {
+                    res -= arr[i];
+                }
+            }else if ("*" == oper) {
+                res = arr[0];
+                for (let i = 1; i < arr.length; i++) {
+                    res *= arr[i];
+                }
+            }else if ("/" == oper) {
+                //js会显示小数
+                res = arr[0];
+                for (let i = 1; i < arr.length; i++) {
+                    res /= arr[i];
+                }
+            }
+            else {
+                console.log("oper格式有误")
+            }
+            return res;
+        }
+
+        console.log(calNum(cal));
+
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>
