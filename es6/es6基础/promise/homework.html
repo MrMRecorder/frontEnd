@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="script/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        //使用jquery完成三次Ajax请求 student -> class -> school
+        $.ajax({
+            url:"data/student_100.json",
+            success(resData){
+                console.log("student info:",resData);
+                //第二次
+                $.ajax({
+                    url:`data/class_${resData.class_id}.json`,
+                    success(resData) {
+                        console.log("class info:",resData);
+                        //第三次
+                        $.ajax({
+                            url:`data/school_${resData.school_id}.json`,
+                            success(resData){
+                                console.log("school info:",resData);
+                            },error(err){
+                                console.log("err info:",err);
+                            }
+                        })
+                    },error(err) {
+                        console.log("err info:",err);
+                    }
+
+                })
+            },
+            error(err){
+                console.log("err info:",err);
+            }
+        })
+        //可以看出可读性和维护性比较差 ——> 使用promise代码重排（homework2）
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

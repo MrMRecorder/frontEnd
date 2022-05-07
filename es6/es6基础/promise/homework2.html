@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="script/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        //使用promise对刚才的三次Ajax请求进行优化
+       function get(url,data){
+           return new Promise((resolve, reject) => {
+               $.ajax({
+                   url:url,
+                   data:data,
+                   success(resData){
+                       resolve(resData);
+                   },
+                   error(err){
+                       reject(err)
+                   }
+               })
+           })
+        }
+        // student -> class -> school
+        get("data/student_100.json").then(resData => {
+            //第一次
+            console.log("student info:",resData);
+            return get(`data/class_${resData.class_id}.json`)
+        }).then(resData => {
+            // 第二次
+            console.log("class info:",resData);
+            return get(`data/school_${resData.school_id}.json`)
+        }).then(resData => {
+            // 第三次
+            console.log("school info:",resData);
+        }).catch(err => {
+            console.log("promise请求异常=", err);
+        })
+        //可以看简洁了许多，出可读性和维护性也变得比较好
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>
