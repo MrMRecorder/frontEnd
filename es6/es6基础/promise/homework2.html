@@ -4,22 +4,24 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script type="text/javascript" src="script/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="script/promise_utils.js"></script>
     <script type="text/javascript">
         //使用promise对刚才的三次Ajax请求进行优化
-       function get(url,data){
-           return new Promise((resolve, reject) => {
-               $.ajax({
-                   url:url,
-                   data:data,
-                   success(resData){
-                       resolve(resData);
-                   },
-                   error(err){
-                       reject(err)
-                   }
-               })
-           })
-        }
+        //可以将方法封装到js文件中
+        // function get(url,data){
+        //     return new Promise((resolve, reject) => {
+        //         $.ajax({
+        //             url:url,
+        //             data:data,
+        //             success(resData){
+        //                 resolve(resData);
+        //             },
+        //             error(err){
+        //                 reject(err)
+        //             }
+        //         })
+        //     })
+        // }
         // student -> class -> school
         get("data/student_100.json").then(resData => {
             //第一次
