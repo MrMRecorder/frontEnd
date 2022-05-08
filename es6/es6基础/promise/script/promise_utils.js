@@ -5,18 +5,17 @@
  * @param data ajax请求携带的数据
  * @returns {Promise<unknown>}
  */
-function get(url, data) {
+function get(url,data){
     return new Promise((resolve, reject) => {
         $.ajax({
-                url: url,
-                data: data,
-                success(resultData) {
-                    resolve(resultData);
-                },
-                error(err) {
-                    reject(err);
-                }
+            url:url,
+            data:data,
+            success(resData){
+                resolve(resData);
+            },
+            error(err){
+                reject(err)
             }
-        )
+        })
     })
 }

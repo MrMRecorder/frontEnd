@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue快速入门案例</title>
+    <!--引入vue-->
+    <script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+<!--这里注意要先创建一个id为app的div，后面的vue对象才能挂载到这个div上-->
+<!--顺序反了的话就无法挂载成功-->
+<div id="app">
+    <!--在标签体内可以使用插值表达式-->
+    <h1>{{name}} - {{message}}</h1>
+    <!--但是在标签或者元素的属性里使用插值表达式就会失效，需要使用v-bind单向数据渲染
+    可以简写为 ：-->
+    <img src="{{img_src}}"> 图片并没有显示
+    <img v-bind:src="img_src" >
+    <!--可以简写为一个 ：-->
+    <img :src="img_src" :width="img_width">
+</div>
+
+<script type="text/javascript">
+    // 创建一个vue对象 —— 这里使用let vm接收一下是为了方便console.log(vm)查看vue对象的结构，不接收也可以
+    let vm = new Vue({
+        //el是element的简写，表示创建的 vue 实例挂载到哪个元素下面（这里是id=app 的 div）挂载到class也可以写成.xxx
+        el:"#app",
+        data:{
+            // 这里是model的数据池，以K:V对的方式来显示
+            name : "jack",
+            message : "hello",
+            img_src:"666.png",
+            img_width:"200px"
+        }
+    })
+    console.log(vm);
+</script>
+
+</body>
+</html>
