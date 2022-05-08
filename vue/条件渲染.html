@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>条件渲染(v-if/v-show)</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <input type="checkbox" v-model="flag">是否同意条款[v-if 实现]
+    <!--v-if 会确保在切换过程中，条件块内的事件监听器和子组件销毁和重建
+    就是使用v-if的时候是真实的创建和销毁dom节点而不是通过控制css样式来显示的-->
+    <h1 v-if="flag">你同意条款</h1>
+    <h1 v-else>你不同意条款</h1>
+
+    <input type="checkbox" v-model="show">是否同意条款[v-show 实现]
+    <!--v-show 只是在切换过程中，通过控制css样式(display:none)来显示的
+    一开始就创建了全部的节点-->
+    <h1 v-show="show">你同意条款</h1>
+    <h1 v-show="!show">你不同意条款</h1>
+    <!--所以在创建和销毁节点比较频繁的时候可以选用v-show来减少开销-->
+    你的成绩:<input type="text" v-model="score" @blur="update">
+    <p>你当前的成绩是{{score}}</p>
+    <p v-if="score>90">优秀</p>
+    <p v-else-if="score>70">良好</p>
+    <p v-else-if="score>=60">及格</p>
+    <p v-else>不及格</p>
+</div>
+<script type="text/javascript">
+    // 创建一个vue对象
+    let vm = new Vue({
+        el: "#app",
+        data: {
+            flag: false,
+            show: false,
+            score: 0
+        },
+        methods: {
+            update() {
+                if (this.score > 100) {
+                    this.score = 100
+                }
+                if (this.score < 0) {
+                    this.score = 0
+                }
+            }
+        }
+    })
+    console.log(vm);
+</script>
+</body>
+</html>
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>条件渲染(v-if/v-show)</title>-->
+<!--    <script src="vue.js"></script>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div id="app">-->
+
+<!--</div>-->
+<!--<script type="text/javascript">-->
+<!--    // 创建一个vue对象-->
+<!--    let vm = new Vue({-->
+<!--        el: "#app",-->
+<!--        data: {-->
+
+<!--        },-->
+<!--        methods: {-->
+
+
+<!--        }-->
+<!--    })-->
+<!--    console.log(vm);-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->

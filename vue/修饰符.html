@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>修饰符</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+<!--修饰符 (Modifiers) 是以（.）指明的后缀，指出某个指令以特殊方式绑定-->
+
+<div id="app">
+    <!--有时在表单提交的时候我们不希望按照默认方式提交,因为默认方式会直接跳转界面
+    我们想加上一些自己的业务逻辑,如对表单的某些字段进行验证后再以Ajax的方式进行提交
+    这时就可以采用.prevent修饰符来阻止默认提交-->
+    <form action="http://www.baidu.com" v-on:submit.prevent="onMySubmit">
+        妖怪名: <input type="text" v-model="monster.name"><br/><br/>
+        <button type="submit">注册</button>
+    </form>
+    <p>服务返回的数据是{{count}}</p>
+    <h1>修饰符扩展案例</h1>
+    <button v-on:click.once="onMySubmit">点击一次</button><br/>
+    <!--按键修饰符,按下对应的按键之后才会触发click绑定的方法-->
+    <input type="text" v-on:keyup.enter="onMySubmit">
+    <input type="text" v-on:keyup.down="onMySubmit">
+    <!--去掉首尾空格-->
+    <input type="text" v-model.trim="count">
+</div>
+<script type="text/javascript">
+    // 创建一个vue对象
+    let vm = new Vue({
+        el: "#app",
+        data: {
+            // 这里是model的数据池，以K:V对的方式来显示
+            monster:{
+                //这里不写对象的属性,v-model="monster.name"会动态生成
+            },
+            count:0
+        },
+        methods: {
+            onMySubmit(){
+                if (this.monster.name){
+                    console.log("提交表单 name=", this.monster.name);
+                    //这里，程序员就可以根据自己的业务发出 ajax 请求到后端
+                    // 得到数据后，在进行数据更新
+                    this.count = 666;
+                }else {
+                    console.log("请输入名字");
+                }
+            }
+
+        }
+    })
+    console.log(vm);
+</script>
+</body>
+</html>

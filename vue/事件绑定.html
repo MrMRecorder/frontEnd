@@ -1,10 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>事件绑定</title>
+    <script type="text/javascript" src="vue.js"></script>
 </head>
 <body>
+<div id="app">
+    <!--如果方法没有参数，可以省略()[需要浏览器支持]-->
+    <!--v-on 指令的简写形式 @ [需要浏览器支持]-->
+    <button v-on:click="addOne()">点击次数 + 1</button>
+    <!--因为当前div已经挂载上了一个vue对象，
+    所以这里的count在方法池中没有找到的话会自动到数据池中去寻找-->
+    <button @click="count += 2">点击次数 + 2</button>
+    <p>一共点击了{{count}}次</p>
+    姓名:<input type="text" v-model="name">
+    <button @click="showName">点击显示姓名</button>
 
+</div>
+
+<script type="text/javascript">
+    // 创建一个vue对象
+    let vm = new Vue({
+        el: "#app",
+        data: {
+            // 这里是model的数据池，以K:V对的方式来显示
+            count: 0,
+            name: "jack"
+        },
+        methods: {
+            addOne() {
+                //因为 add 方法和 data 数据池在一个 vue 实例,可以通过 this 访问
+                this.count += 1;
+            },
+            showName() {
+                alert(this.name)
+            }
+        }
+    })
+    console.log(vm);
+</script>
 </body>
 </html>
