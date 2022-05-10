@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>全局组件</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+<h1>app1</h1>
+<div id="app">
+    <!--使用全局组件-->
+<counter></counter><br>
+<counter></counter><br>
+<counter></counter><br>
+
+</div>
+<h1>app2</h1>
+<div id="app2">
+
+    <!--使用全局组件-->
+    <counter></counter><br>
+    <!--使用局部组件-->
+    <!--使用局部组件 ,该组件是从挂载到 app2 的 vue 中的-->
+    <my_btn></my_btn><br>
+
+
+
+</div>
+<script type="text/javascript">
+
+    // 1、定义一个全局组件, 名称为 counter
+    // 2. {} 表示就是我们的组件相关的内容
+    // 3. template 指定该组件的界面, 因为会引用到数据池的数据，所以需要是模板字符串
+    // 4. 要把组件视为一个 Vue 实例，也有自己的数据池和 methods
+    // 5. 对于组件，我们的数据池的数据，是使用函数（方法）返回
+    // [目的是为 了保证每个组件的数据是独立], 不能使用原来的方式
+    // data 是一个函数，不再是一个对象， 这样每次引用组件都是独立的对象/数据
+    // 6. 这时我们达到目的——界面通过 template 实现共享,业务处理也复用
+    // 7. 全局组件是属于所有 vue 实例，因此，可以在所有的 vue 实例使用
+    // 8. 注意组件的定义一定要放到vue实例声明的前面，否则挂载到元素上时就看不到了（因为js按顺序执行）
+    Vue.component("counter", {
+        // 组件渲染需要 html 模板，所以增加了 template 属性，值就是 HTML 模板
+        template: `<button v-on:click="click()">点击次数= {{count}} 次【全局组件化方式】</button>`,
+        data() {//这里需要注意，和原来的方式不一样!!!!是使用函数/方法返回
+            return {
+                count: 0
+            }
+        },
+        methods:{
+            click(){
+                this.count ++ ;
+            }
+        }
+
+    })
+
+    //定义一个局部组件, 名称为 myBtn
+    //扩展说明：
+    // 1. 可以把常用的组件，定义在某个 commons.js 中 然后export
+    // 2. 如果某个页面需要使用， 直接 import（类似Java的工具类）
+    const myBtn = {
+        template: `<button v-on:click="click()">点击次数= {{count}} 次【局部组件化方式】</button>`,
+        data() {//这里需要注意，和原来的方式不一样!!!!是使用函数/方法返回
+            return {
+                count: 0
+            }
+        },
+        methods:{
+            click(){
+                this.count ++ ;
+            }
+        }
+
+    }
+
+    // 创建一个vue对象
+    let vm = new Vue({
+        el: "#app",
+
+    });
+    // 再创建一个vue对象
+    let vm2 = new Vue({
+        el: "#app2",
+        components:{
+            //引入(注册)某个组件, 此时 localBtn就是一个局部组件,使用范围仅在当前vue实例(挂载到app2的元素)
+            "my_btn":myBtn,
+            // "myBtn":myBtn
+            // 名字格式注意事项：
+            // 1.纯小写加上-或者_
+            // 2.只首字母大写
+            // 3.驼峰法或者夹杂首字母大写会无法正常显示！！！——浏览器中自动变成纯小写导致失效
+        }
+
+    })
+
+</script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>生命周期函数（钩子【hook】函数、监听函数）</title>
+</head>
+<body>
+<div id="app">
+    <p>重点关注加*的</p>
+    <p>1) new Vue():new 了一个 Vue 的实例对象，此时就会进入组件的创建过程。</p>
+    <p>2) Init Events & Lifecycle(vue底层调用)：初始化组件的事件和生命周期函数</p>
+    <p>3) * beforeCreate(可以自己写)：组件创建之后遇到的第一个生命周期函数，这个阶段 data 和 methods 以及 dom 结构都未 被初始化，
+        也就是获取不到 data 的值(插值表达式还没有被渲染)，不能调用 methods 中的函数</p>
+    <p>4) Init injections & reactivity：这个阶段中, 正在初始化 data 和 methods 中的方法</p>
+    <p>5) * created：这个阶段组件的 data 和 methods 中的方法已初始化结束，可以访问，但是 dom 结构未 初始化，页面未渲染
+        - 说明：在这个阶段，经常会发起 Ajax 请求，得到数据以便进行接下来的渲染</p>
+    <p>6)模板编译阶段（在内存中加载——内存模板结构）：判断el和template有没有，但是此时还没有将模板挂载到div上</p>
+    <p>有template的话就对template进行编译，没有就对数据模型进行编译</p>
+    <p>7) * beforeMount：挂载之前——当模板在内存中编译完成，此时内存中的模板结构还未渲染至页面（用户看到的页面dom）上，看不到真实的数据</p>
+    <p>8)Create vm.$el and replace ‘el’ with it：这一步，再在把内存中渲染好的模板结构替换至真实的 dom 结构也就是页面上</p>
+    <p>9) * mounted（循环监听状态）：挂载——此时，页面渲染好，用户看到的是真实的页面数据(已将数据渲染到插值表达式)，生命周期创建阶段完毕，进入到了运行中的阶段</p>
+    <p>循环：监听data数据池中的数据是否发生变化 -> beforeUpdate（数据发生变化才会被调用） ->
+        渲染之前创建的内存模板然后再重新替换用户看到的dom -> updated(可以看到最新的渲染过后的页面) -> 再回到mounted状态等待循环</p>
+    <p>10) 生命周期运行中 </p>
+    <p>10.1 * beforeUpdate:当执行此函数，数据池的数据是新的，但是页面是旧的（还没有渲染）</p>
+    <p>10.2 Virtual DOM re-render and patch：根据最新的 data 数据，重新渲染内存中的模板结构，并把渲染好的模板结构，替换至页面上</p>
+    <p>10.3 * updated 页面已经完成了更新，此时，data 数据和页面的数据都是新的</p>
+    <p>11)beforeDestroy：组件即将被销毁,但此时组件的 data、methods数据或方法 还可被调用</p>
+    <p>12) Teardown…… 注销组件和事件监听</p>
+    <p>13) destroyed：组件已经完成了销毁</p>
+    <img src="https://cn.vuejs.org/images/lifecycle.png">
+
+
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>验证生命周期函数小案例</title>
+    <script src="vue.js"></script>
+
+</head>
+<body>
+<div id="app">
+    <h1>验证生命周期函数小案例</h1>
+    <span id="num">{{num}}</span>
+    <button @click="num++">赞！</button>
+    <h2>{{name}}，有{{num}}次点赞</h2>
+</div>
+<script type="text/javascript">
+
+    let vm = new Vue({
+        el: "#app",
+        data: {name: "紫英", num: 0},
+        methods: {
+            show() {
+                return this.name;
+            },
+            add() {
+                this.num++;
+            }
+        },
+        //生命周期函数如果不自定义的话就相当于没有（会触发但是里面没东西）
+        beforeCreate() {
+            //生命周期函数-创建 vue 实例前
+            console.log("=============beforeCreate==========");
+            console.log(" 数据模型（数据池）的数据是否加载?[no]", this.name, " ", this.num); //undefined   undefined
+            //console.log("自定义方法是否加载/使用?[no]", this.show());//TypeError: this.show is not a function
+            //这里用户dom指的就是id为num的span标签
+            console.log(" 用户页面dom是否加载?[yes]", document.getElementById("num"));//<span id="num">{{num}}</span>
+            console.log(" 用户页面dom是否被渲染?[no]", document.getElementById("num").innerText);//{{num}}
+        },
+        created(){
+            //生命周期函数-创建 vue 实例
+            console.log("=============created==========");
+            console.log(" 数据模型（数据池）的数据是否加载?[yes]", this.name, " ", this.num); //紫英   0
+            console.log("自定义方法是否加载/使用?[yes]", this.show());//紫英
+            //这里用户dom指的就是id为num的span标签
+            console.log(" 用户页面dom是否加载?[yes]", document.getElementById("num"));//<span id="num">{{num}}</span>
+            console.log(" 用户页面dom是否被渲染?[no]", document.getElementById("num").innerText);//{{num}}
+            //可以发出 Ajax
+            // 接收返回的数据 -> 让用户拿到最新从后端返回的数据
+            // 再次去更新 data 数据池的数据
+            //编译内存模板结构
+            // 挂载、替换...
+        },
+        beforeMount(){
+            //生命周期函数-vue实例挂载前
+            console.log("=============beforeMount==========");
+            console.log(" 数据模型（数据池）的数据是否加载?[yes]", this.name, " ", this.num); //紫英   0
+            console.log("自定义方法是否加载/使用?[yes]", this.show());//紫英
+            //这里用户dom指的就是id为num的span标签
+            console.log(" 用户页面dom是否加载?[yes]", document.getElementById("num"));//<span id="num">{{num}}</span>
+            console.log(" 用户页面dom是否被渲染?[no]", document.getElementById("num").innerText);//{{num}}
+
+        },
+        mounted(){
+            //生命周期函数-vue实例挂载后
+            console.log("=============mounted==========");
+            console.log(" 数据模型（数据池）的数据是否加载?[yes]", this.name, " ", this.num); //紫英   0
+            console.log("自定义方法是否加载/使用?[yes]", this.show());//紫英
+            //这里用户dom指的就是id为num的span标签
+            console.log(" 用户页面dom是否加载?[yes]", document.getElementById("num"));//<span id="num">0</span>
+            console.log(" 用户页面dom是否被渲染?[yes]", document.getElementById("num").innerText);//0
+
+        },
+        beforeUpdate(){
+            //生命周期函数-数据池更新前
+            console.log("=============beforeUpdate==========");
+            console.log(" 数据模型（数据池）的数据是否加载?[yes]", this.name, " ", this.num); //紫英   1
+            console.log("自定义方法是否加载/使用?[yes]", this.show());//紫英
+            //这里用户dom指的就是id为num的span标签
+            console.log(" 用户页面dom是否被加载?[yes]", document.getElementById("num"));//<span id="num">1</span>
+            console.log(" 用户页面dom是否被更新?[no]", document.getElementById("num").innerText);//0
+            // 验证数据 => 对Ajax返回来的数据进行一些操作
+            // 修正之后update渲染成修正后的数据
+
+        },
+        updated(){
+            //生命周期函数-数据池更新后
+            console.log("=============updated==========");
+            console.log(" 数据模型（数据池）的数据是否加载?[yes]", this.name, " ", this.num); //紫英   1
+            console.log("自定义方法是否加载/使用?[yes]", this.show());//紫英
+            //这里用户dom指的就是id为num的span标签
+            console.log(" 用户页面dom是否被加载?[yes]", document.getElementById("num"));//<span id="num">1</span>
+            console.log(" 用户页面dom是否被更新?[yes]", document.getElementById("num").innerText);//1
+
+        }
+    })
+
+</script>
+</body>
+</html>
