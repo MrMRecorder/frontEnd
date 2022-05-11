@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>axios请求json</title>
+    <script src="vue.js"></script>
+    <script src="axios.min.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <h1>妖怪列表</h1>
+    <table border="1" width="300">
+        <tr >
+            <td>name</td>
+            <td>age</td>
+        </tr>
+        <tr v-for="monster in monsterList">
+            <td>{{monster.name}}</td>
+            <td>{{monster.age}}</td>
+        </tr>
+    </table>
+</div>
+<script type="text/javascript">
+    let vm = new Vue({
+        //el是element的简写，表示创建的 vue 实例挂载到哪个元素下面（这里是id=app 的 div）挂载到class也可以写成.xxx
+        el:"#app",
+        data:{
+            monsterList: []//数组
+        },
+        methods:{
+
+           list(){
+               // 使用axios发送Ajax请求
+            axios.get("http://localhost:63342/vue/monster2.json").
+            then(resData => {
+                console.log("数据转成json字符串 =>",JSON.stringify(resData))
+                this.monsterList = resData.data.data.items;
+                //想要再请求的话就  return axios.get("xxx") 然后再.then(...)
+            }).catch(err => {
+                console.log("err => ", err)
+            })
+            }
+        },
+        created(){
+            //生命周期函数
+            this.list()
+        }
+    })
+    console.log(vm);
+</script>
+
+</body>
+</html>
